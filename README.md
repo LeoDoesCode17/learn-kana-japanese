@@ -42,8 +42,8 @@ A single button toggles between **Reveal** and **Next**, so learners can first t
 
 ```bash
 # clone the repository
-git clone <your-repo-url>
-cd <your-project-folder>
+git clone git@github.com:LeoDoesCode17/learn-kana-japanese.git
+cd learn-kana-japanese
 
 # install dependencies
 npm install
