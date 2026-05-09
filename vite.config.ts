@@ -7,6 +7,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, "index.html"),
         exercise: resolve(__dirname, "kana_exercise_1.html"),
+        staytuned: resolve(__dirname, "stay-tuned.html"),
       },
     },
   },
