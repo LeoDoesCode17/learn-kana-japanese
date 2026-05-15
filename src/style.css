@@ -50,7 +50,8 @@ body {
   justify-content: center;
   align-items: stretch;
   margin-bottom: 20px;
-  flex-wrap: wrap; /* allows stacking on narrow screens */
+  flex-wrap: nowrap; /* allows stacking on narrow screens */
+  /* flex-wrap: wrap; */
 }
 
 /* Individual card */
@@ -243,6 +244,11 @@ body {
 
   .card {
     max-width: 100%; /* cards take full width */
+    flex: 1 1 100%;
+  }
+
+  .cards {
+    flex-wrap: wrap; 
   }
 
   .card-romaji {
@@ -404,7 +410,7 @@ body {
 
 /* Jisho panel */
 #jisho-panel {
-  display: none;
+  /* display: none; */
   margin: 1rem 0;
   padding: 1rem;
   background: #fafafa;
