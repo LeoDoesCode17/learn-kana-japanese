@@ -287,49 +287,59 @@ export const KanaExercisePage: React.FC = () => {
 
   // ----- render -----
   return (
-    <main id="app">
-      <h1>LEARNING WRITE KANA</h1>
-
+    <div className="min-h-screen flex items-center justify-center bg-[radial-gradient(circle_at_top,#f8fbff,#e2ecff)] text-slate-800">
+      <main className="w-full max-w-[900px] bg-white rounded-2xl shadow-[0_18px_45px_rgba(15,23,42,0.15)] px-4 pt-6 pb-8 text-center">
+        <h1 className="mb-5 text-2xl tracking-[0.08em] uppercase text-slate-900">
+          LEARNING WRITE KANA
+        </h1>
       {/* streak bar */}
-      <div id="streak-bar">
-        🔥 <span id="streak-count">{streak}</span> day streak &nbsp;·&nbsp;
-        <span id="session-count">{sessionToday}</span> done today
+      <div className="text-sm text-slate-600 mb-4">
+        🔥{" "}
+        <span className="font-semibold text-red-600">{streak}</span> day streak
+        &nbsp;·&nbsp;
+        <span className="font-semibold">{sessionToday}</span> done today
       </div>
 
       {/* cards */}
-      <section className="cards">
-        <div className="card" id="hiragana-card">
-          <div className="card-title">Mora Hiragana</div>
-          <div className="card-romaji">{currentHira.romaji}</div>
-          <div className="card-kana">
+      <section className="flex flex-wrap justify-center items-stretch gap-4 mb-5">
+        {/* Hiragana card */}
+        <div className="relative flex-1 min-w-[260px] max-w-[340px] bg-slate-50 rounded-xl px-4 py-4 shadow-md border border-slate-200 flex flex-col justify-center">
+          <div className="text-sm font-semibold text-slate-600 mb-2">
+            Mora Hiragana
+          </div>
+          <div className="text-2xl font-bold tracking-[0.08em] mb-1 text-slate-900">
+            {currentHira.romaji}
+          </div>
+          <div className="text-[34px] font-bold text-blue-600 min-h-[42px]">
             {isRevealed ? currentHira.hiragana : ""}
           </div>
+
           <button
-            className="speak-btn"
+            className={`absolute top-2 right-2 w-8 h-8 border border-slate-200 rounded-md bg-white text-sm flex items-center justify-center transition
+              ${isRevealed ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
             onClick={() => isRevealed && speak(currentHira.hiragana)}
-            style={{
-              opacity: isRevealed ? 1 : 0,
-              pointerEvents: isRevealed ? "auto" : "none",
-            }}
             title="Hear hiragana (H)"
           >
             🔊
           </button>
         </div>
 
-        <div className="card" id="katakana-card">
-          <div className="card-title">Mora Katakana</div>
-          <div className="card-romaji">{currentKata.romaji}</div>
-          <div className="card-kana">
+        {/* Katakana card */}
+        <div className="relative flex-1 min-w-[260px] max-w-[340px] bg-slate-50 rounded-xl px-4 py-4 shadow-md border border-slate-200 flex flex-col justify-center">
+          <div className="text-sm font-semibold text-slate-600 mb-2">
+            Mora Katakana
+          </div>
+          <div className="text-2xl font-bold tracking-[0.08em] mb-1 text-slate-900">
+            {currentKata.romaji}
+          </div>
+          <div className="text-[34px] font-bold text-blue-600 min-h-[42px]">
             {isRevealed ? currentKata.katakana : ""}
           </div>
+
           <button
-            className="speak-btn"
+            className={`absolute top-2 right-2 w-8 h-8 border border-slate-200 rounded-md bg-white text-sm flex items-center justify-center transition
+              ${isRevealed ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
             onClick={() => isRevealed && speak(currentKata.katakana)}
-            style={{
-              opacity: isRevealed ? 1 : 0,
-              pointerEvents: isRevealed ? "auto" : "none",
-            }}
             title="Hear katakana (K)"
           >
             🔊
@@ -338,15 +348,14 @@ export const KanaExercisePage: React.FC = () => {
       </section>
 
       {/* progress */}
-      <div id="progress-wrapper">
+      <div className="w-full max-w-[560px] h-[10px] mx-auto mb-4 rounded-full bg-slate-200 overflow-hidden">
         <div
-          id="progress-bar"
+          className="h-full rounded-full bg-gradient-to-r from-green-400 to-green-600 transition-[width] duration-200 ease-out"
           style={{ width: `${progressPercent}%` }}
-        ></div>
+        />
       </div>
 
-      {/* hint area */}
-      <div id="hint-area">
+      <div className="mx-auto mb-5 max-w-[560px] min-h-[24px] px-4 py-2 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-700 text-xs sm:text-sm">
         {isFinished
           ? "All kana practiced! Press Reset to start again."
           : isRevealed
@@ -356,14 +365,18 @@ export const KanaExercisePage: React.FC = () => {
 
       {/* Jisho panel */}
       {isRevealed && (
-        <div id="jisho-panel">
-          <div id="jisho-label">Example words using this kana</div>
-          <div id="jisho-words">
+        <div className="hidden md:block my-4 px-4 py-4 bg-slate-50 border border-slate-200 rounded-xl">
+          <div className="text-[11px] uppercase tracking-[0.1em] text-slate-400 mb-2">
+            Example words using this kana
+          </div>
+          <div className="flex flex-wrap gap-2">
             {jishoLoading && (
-              <span className="jisho-loading">Loading example words...</span>
+              <span className="text-sm text-slate-400 italic">
+                Loading example words...
+              </span>
             )}
             {jishoError && !jishoLoading && (
-              <span className="jisho-loading">{jishoError}</span>
+              <span className="text-sm text-slate-400 italic">{jishoError}</span>
             )}
             {!jishoLoading &&
               !jishoError &&
@@ -375,15 +388,18 @@ export const KanaExercisePage: React.FC = () => {
                   .slice(0, 2)
                   .join(", ");
                 return (
-                  <div
+                  <button
                     key={idx}
-                    className="jisho-word"
+                    type="button"
+                    className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-left flex flex-col gap-0.5 hover:border-indigo-500 transition-colors"
                     onClick={() => speak(word)}
                   >
-                    <span className="jisho-jp">{word}</span>
-                    <span className="jisho-reading">{reading}</span>
-                    <span className="jisho-meaning">{meaning}</span>
-                  </div>
+                    <span className="text-xl text-slate-900">{word}</span>
+                    <span className="text-[11px] text-slate-500">{reading}</span>
+                    <span className="text-[11px] text-indigo-600 font-medium">
+                      {meaning}
+                    </span>
+                  </button>
                 );
               })}
           </div>
@@ -391,9 +407,16 @@ export const KanaExercisePage: React.FC = () => {
       )}
 
       {/* main action button */}
-      <button id="action-btn" onClick={handleActionClick}>
+      <button
+        type="button"
+        onClick={handleActionClick}
+        className="mt-3 inline-block px-8 py-3 text-sm font-semibold rounded-full border-0 text-white bg-gradient-to-r from-blue-600 to-indigo-500 shadow-[0_10px_20px_rgba(37,99,235,0.35)] transition
+                  hover:brightness-105 hover:shadow-[0_12px_24px_rgba(37,99,235,0.4)]
+                  active:translate-y-[1px] active:scale-[0.98] active:shadow-[0_6px_14px_rgba(37,99,235,0.3)]"
+      >
         {buttonLabel}
       </button>
-    </main>
+      </main>
+    </div>
   );
 };
