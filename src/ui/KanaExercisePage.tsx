@@ -84,7 +84,7 @@ export const KanaExercisePage: React.FC = () => {
   const [katakanaIdx, setKatakanaIdx] = useState(1);
   const [isRevealed, setIsRevealed] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
-  const [kanaCounter, setKanaCounter] = useState(0);
+  // const [kanaCounter, setKanaCounter] = useState(0);
 
   const [streak, setStreak] = useState(0);
   const [sessionToday, setSessionToday] = useState(0);
@@ -202,7 +202,7 @@ export const KanaExercisePage: React.FC = () => {
           isKatakanaDone: false,
         }))
       );
-      setKanaCounter(0);
+      // setKanaCounter(0);
       setIsFinished(false);
       setIsRevealed(false);
       setJishoWords([]);
@@ -248,7 +248,7 @@ export const KanaExercisePage: React.FC = () => {
 
       setHiraganaIdx(newH);
       setKatakanaIdx(newK);
-      setKanaCounter((c) => c + 1);
+      // setKanaCounter((c) => c + 1);
       setIsRevealed(false);
       setJishoWords([]);
       setJishoError(null);
