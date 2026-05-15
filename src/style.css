@@ -6,7 +6,11 @@
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
     sans-serif;
   background: radial-gradient(circle at top, #f8fbff, #e2ecff);
   display: flex;
@@ -168,7 +172,7 @@ body {
   display: flex;
   flex-direction: column; /* column order */
   align-items: center;
-  gap: 12px;              /* space between buttons */
+  gap: 12px; /* space between buttons */
 }
 
 #menu h1 {
@@ -221,13 +225,13 @@ body {
 /* ===== Mobile adjustments (<= 600px) ===== */
 @media (max-width: 600px) {
   body {
-    align-items: flex-start;            /* allow content to start at top */
+    align-items: flex-start; /* allow content to start at top */
   }
 
   #app,
   #menu {
-    margin: 16px;                      /* small margin around the card */
-    width: calc(100% - 32px);          /* full width minus margins */
+    margin: 16px; /* small margin around the card */
+    width: calc(100% - 32px); /* full width minus margins */
     padding: 20px 14px 26px;
   }
 
@@ -238,7 +242,7 @@ body {
   }
 
   .card {
-    max-width: 100%;                   /* cards take full width */
+    max-width: 100%; /* cards take full width */
   }
 
   .card-romaji {
@@ -257,7 +261,7 @@ body {
   #action-btn,
   #start-kana-btn,
   #kana-exercise-btn-2 {
-    width: 100%;                       /* full-width button is easier to tap */
+    width: 100%; /* full-width button is easier to tap */
     max-width: 320px;
   }
 }
@@ -351,4 +355,111 @@ body {
     width: 100%;
     max-width: 320px;
   }
+}
+
+/* Streak bar */
+#streak-bar {
+  text-align: center;
+  font-size: 13px;
+  color: #888;
+  margin: 0.25rem 0 1rem;
+}
+
+#streak-count {
+  font-weight: 600;
+  color: #c0392b;
+}
+
+/* Speak buttons */
+.speak-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    opacity 0.3s,
+    background 0.2s;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.speak-btn:hover {
+  background: #eef4ff;
+  border-color: #4a56e2;
+}
+
+/* make card relative so speak-btn positions correctly */
+.card {
+  position: relative;
+}
+
+/* Jisho panel */
+#jisho-panel {
+  display: none;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 12px;
+}
+
+#jisho-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #aaa;
+  margin-bottom: 10px;
+}
+
+#jisho-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.jisho-word {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: border-color 0.2s;
+}
+
+.jisho-word:hover {
+  border-color: #4a56e2;
+}
+
+.jisho-jp {
+  font-size: 20px;
+  color: #1a1a2e;
+}
+
+.jisho-reading {
+  font-size: 11px;
+  color: #999;
+}
+
+.jisho-meaning {
+  font-size: 11px;
+  color: #4a56e2;
+  font-weight: 500;
+}
+
+.jisho-loading {
+  font-size: 13px;
+  color: #aaa;
+  font-style: italic;
 }

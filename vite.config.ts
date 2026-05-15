@@ -11,4 +11,12 @@ export default defineConfig({
       },
     },
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://learn-kana-japanese.vercel.app",
+        changeOrigin: true,
+      },
+    },
+  },
 });
