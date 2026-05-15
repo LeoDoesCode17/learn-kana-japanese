@@ -1,6 +1,6 @@
 # Learning Write Kana
 
-A small web app built with **Vite + TypeScript + jQuery** to practice writing Japanese kana (hiragana and katakana) from romaji prompts.
+A small web app built with **Vite + React + TypeScript** to practice writing Japanese kana (hiragana and katakana) from romaji prompts.
 
 The app shows two cards:
 
@@ -17,17 +17,24 @@ A single button toggles between **Reveal** and **Next**, so learners can first t
 - Reveal / Next flow for active recall:
   - **Reveal** shows the kana for the current romaji.
   - **Next** generates a new pair of romaji.
-- Complete basic **gojūon** set (46 sounds) with romaji, hiragana, and katakana.
-- Simple, responsive UI using flexbox and card-based layout.
+- Complete basic **gojūon** set (46 sounds) with romaji, hiragana, and katakana.[web:47][web:57]
+- Daily **streak tracking** stored in `localStorage` (streak days + sessions done today).
+- Keyboard shortcuts:
+  - Space / Right Arrow to advance.
+  - H = play hiragana audio, K = play katakana audio (Web Speech API).
+- Example words panel powered by a small API proxy to **Jisho.org** for extra reading practice.
+- Simple, responsive UI using **Tailwind CSS** and a card-based layout.
 
 ---
 
 ## Tech Stack
 
-- [Vite](https://vite.dev/) – dev server and bundler.[web:18]
-- TypeScript – typed logic and data model for kana items.[web:20]
-- jQuery – DOM selection and event handling.
-- CSS (vanilla) – styling for the cards, hint bar, and button.
+- [Vite](https://vite.dev/) – dev server and bundler for fast React + TS development.[web:18][web:104]
+- React – component-based UI for the menu, exercise page, and “stay tuned” page.[web:104]
+- TypeScript – typed logic for kana data, streak tracking, and state handling.[web:20]
+- Tailwind CSS – utility-first styling for layout, cards, buttons, and responsive design.[web:94]
+- Web Speech API – client-side text-to-speech for kana pronunciation.
+- Jisho API proxy – backend endpoint under `/api/jisho` used to fetch example words for the current kana.
 
 ---
 
@@ -56,7 +63,7 @@ npm install
 npm run dev
 ```
 
-Then open the URL shown in the terminal (usually `http://localhost:5173`) in your browser.[web:27]
+Then open the URL shown in the terminal (usually `http://localhost:5173`) in your browser.[web:27][web:104]
 
 ### Build
 
@@ -71,12 +78,16 @@ npm run preview
 
 ```text
 .
-├─ index.html        # Main HTML skeleton
+├─ index.html             # Root HTML for the SPA entry
 ├─ src
-│  ├─ main.ts        # App entry, state handling, randomizer, DOM updates
-│  ├─ kana.ts        # KanaItem interface and full kanaList
-│  └─ style.css      # Layout and styling for cards, hint, button
-└─ vite.config.ts    # Vite configuration
+│  ├─ main.tsx            # React app entry, routes to menu / exercise pages
+│  ├─ pages
+│  │  ├─ MenuPage.tsx     # Main menu with exercise selection
+│  │  ├─ KanaExercisePage.tsx  # Main kana exercise logic & UI
+│  │  └─ StayTunedPage.tsx     # “Coming soon” screen for future features
+│  ├─ kana.ts             # KanaItem interface and full kanaList (46 basic kana)
+│  └─ style.css           # Tailwind entry file (`@import "tailwindcss"`)
+└─ vite.config.ts         # Vite configuration (React + Tailwind plugins)
 ```
 
 ---
@@ -89,25 +100,28 @@ npm run preview
    - `hiragana`: e.g. `か`
    - `katakana`: e.g. `カ`.[web:47][web:57]
 
-2. On load, `main.ts`:
+2. The exercise page keeps state for:
 
-   - Picks two **different** random indices from `kanaList`.
-   - Displays only the romaji on each card.
-   - Sets the button label to **Reveal**.
+   - which kana are currently shown (indices for hiragana and katakana),
+   - which kana have already been practiced (to avoid repeats),
+   - whether answers are currently revealed,
+   - streak information loaded from and saved to `localStorage`.
 
-3. When the user clicks the button:
+3. When the user clicks the main button:
 
-   - If kana are hidden, it reveals hiragana and katakana and changes the label to **Next**.
-   - If kana are revealed, it selects a new pair of romaji, hides kana again, and resets the label to **Reveal**.
+   - If answers are hidden (**Reveal**): it shows the kana, bumps the streak counters, and fetches example words.
+   - If answers are shown (**Next**): it marks the current kana as “done”, selects a new random pair that has not been used yet, hides the answers again, and resets the example words.
+   - When all kana have been practiced, the button changes to **Reset**, which clears the “done” state and restarts the session.
 
 ---
 
 ## Possible Enhancements
 
 - Add dakuten / handakuten / yōon kana and a toggle for “Basic” vs “Advanced”.
-- Track score or streak (e.g. “How many in a row did you recall correctly?”).
+- Add separate exercise modes (hiragana-only, katakana-only, random mix).
+- Show a “session summary” (accuracy, time spent, streak changes).
 - Add stroke order hints or links to external stroke order diagrams.
-- Add keyboard shortcuts: space for Reveal/Next, etc.
+- Add per-kana difficulty tracking (e.g. mark kana as “hard” and show them more often).
 
 ---
 
